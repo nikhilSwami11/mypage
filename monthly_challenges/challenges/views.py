@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import Http404, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.template.loader import render_to_string
@@ -17,21 +17,13 @@ monthly_challenges = {
     "September": "Optimize an old project for performance improvements.",
     "October": "Speak at a local meetup or create a tutorial video.",
     "November": "Automate a daily task using a script or bot.",
-    "December": "Reflect on your year's progress and set goals for next year."
+    "December": None
 }
 
 
 def index(request):
-    list_items = []
     months = list(monthly_challenges.keys())
-    for month in months:
-        link = reverse("month-challenge", args = [month])
-        list_item = f' <li><a href ="{link}">{month}</a></li> '
-        list_items.append(list_item)
-    combinedListString = "" 
-    for value in list_items:
-        combinedListString += value
-    return HttpResponse(f" <ul>{combinedListString}</ul>")
+    return render(request, "challenges/index.html", {"months": months})
     
 
 def monthly_challenge_by_number(request, month):
@@ -46,6 +38,8 @@ def monthly_challenge(request, month):
     challenge_text = None
     try:
         challenge_text = monthly_challenges[month]
+        print(challenge_text)
+        print(month)
         return render(request,"challenges/challenge.html", {"month": month, "challenge_description": challenge_text})
     except:
-        return HttpResponseNotFound("This month is not supported")
+        raise Http404()

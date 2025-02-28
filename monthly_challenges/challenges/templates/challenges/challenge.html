@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+{%extends "base.html" %}
+{%block title%} {{month}} Challenge {%endblock%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
+{%block content%}
+{%include "challenges/includes/header.html"%}
     <h1>{{month}} Challenge</h1>
-    <h2>{{challenge_description}}</h2>
-
-</body>
-
-</html>
+    {%if challenge_description is not None%}
+        <h2>{{challenge_description}}</h2>
+    {% else %}
+        <p>No challenge found!</p>
+    {%endif%}
+{%endblock%}
