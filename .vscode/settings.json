@@ -1,4 +1,6 @@
 {
     "window.zoomLevel": 1.2,
-    "python.languageServer": "Pylance"
+    "python.languageServer": "Pylance",
+    "python.defaultInterpreterPath": "/usr/bin/python3",
 }
+// export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
